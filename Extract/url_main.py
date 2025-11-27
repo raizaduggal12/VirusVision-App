@@ -31,10 +31,11 @@ sys.modules['url_main'].sanitization = sanitization
 def predict_url_from_flask(url):
     whitelist = ['hackthebox.eu', 'root-me.org', 'gmail.com']
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    root_dir = os.path.dirname(base_dir)
-    model_path = os.path.join(root_dir, "Classifier", "pickel_model.pkl")
-    vectorizer_path = os.path.join(root_dir, "Classifier", "pickel_vector.pkl")
+    base_dir = os.getcwd()  # ensures correct base path on Render
+    model_path = os.path.join(base_dir, "Classifier", "pickel_model.pkl")
+    vectorizer_path = os.path.join(base_dir, "Classifier", "pickel_vector.pkl")
+
+
 
     import builtins, sys, types
     builtins.sanitization = sanitization
@@ -44,7 +45,7 @@ def predict_url_from_flask(url):
 
     # ✅ Always normalize the input — model expects cleaned version
     url = url.strip().lower()
-    url = url.replace("https://", "").replace("http://", "").replace("www.", "")
+    url = url.strip().lower().replace("https://", "").replace("http://", "").replace("www.", "")
 
     # ✅ Whitelist check
     if url in whitelist:

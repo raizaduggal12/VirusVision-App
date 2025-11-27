@@ -181,10 +181,10 @@ def extract_infos(fpath):
 
 def predict_pe_from_flask(file_path):
     try:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        root_dir = os.path.dirname(base_dir)
-        clf_path = os.path.join(root_dir, "Classifier", "classifier.pkl")
-        features_path = os.path.join(root_dir, "Classifier", "features.pkl")
+        base_dir = os.getcwd()
+        clf_path = os.path.join(base_dir, "Classifier", "classifier.pkl")
+        features_path = os.path.join(base_dir, "Classifier", "features.pkl")
+
 
         clf = joblib.load(clf_path)
         with open(features_path, "rb") as f:
