@@ -42,6 +42,11 @@ def url_page():
 def exit_page():
     return render_template("exit.html", title="Exit")
 
+@app.route("/ping")
+def ping():
+    return "pong", 200
+
+
 
 # ---------------- PE SCANNER ROUTE ----------------
 @app.route("/scan/pe", methods=["POST"])
