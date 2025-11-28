@@ -39,10 +39,14 @@ def predict_url_from_flask(url):
 
 
     # Re-load model and vectorizer
-    with open(model_path, "rb") as f1:
-        lgr = pickle.load(f1)
-    with open(vectorizer_path, "rb") as f2:
-        vectorizer = pickle.load(f2)
+    import joblib
+
+    try:
+        lgr = joblib.load(model_path)
+        vectorizer = joblib.load(vectorizer_path)
+    except Exception as e:
+        return f"❌ Error loading model: {e}"
+
 
     # Clean the input like during training
     url_clean = url.strip().lower().replace("https://", "").replace("http://", "").replace("www.", "")

@@ -187,9 +187,14 @@ def predict_pe_from_flask(file_path):
         clf_path = os.path.join(base_dir, "Classifier", "classifier.pkl")
         features_path = os.path.join(base_dir, "Classifier", "features.pkl")
 
-        clf = joblib.load(clf_path)
-        with open(features_path, "rb") as f:
-            features = pickle.loads(f.read())
+        import joblib
+
+        try:
+            clf = joblib.load(clf_path)
+            features = joblib.load(features_path)
+        except Exception as e:
+            return f"❌ Error loading model: {e}"
+
 
         data = extract_infos(file_path)
         pe_features = [data[x] for x in features]
