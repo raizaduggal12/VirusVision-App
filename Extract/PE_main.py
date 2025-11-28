@@ -183,7 +183,7 @@ def extract_infos(fpath):
 
 def predict_pe_from_flask(file_path):
     try:
-        base_dir = os.path.dirname(os.path.dirname(__file__))
+        base_dir = os.getcwd()
         clf_path = os.path.join(base_dir, "Classifier", "classifier.pkl")
         features_path = os.path.join(base_dir, "Classifier", "features.pkl")
 
@@ -193,7 +193,9 @@ def predict_pe_from_flask(file_path):
             clf = joblib.load(clf_path)
             features = joblib.load(features_path)
         except Exception as e:
-            return f"❌ Error loading model: {e}"
+            print("🚨 Flask error:", e)  # <== This prints error in Render logs
+            result = f"❌ Error during prediction: {e}"
+
 
 
         data = extract_infos(file_path)

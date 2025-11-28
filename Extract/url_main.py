@@ -46,7 +46,9 @@ def predict_url_from_flask(url):
         lgr = joblib.load(model_path)
         vectorizer = joblib.load(vectorizer_path)
     except Exception as e:
-        return f"❌ Error loading model: {e}"
+        print("🚨 Flask error:", e)  # <== This prints error in Render logs
+        result = f"❌ Error during prediction: {e}"
+
 
 
     # Clean the input like during training
